@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Byu BTC-USDT</title>
+</head>
+<body>
+
+<div>
+    <h1>
+        balance: <span id="live">{{text}}</span> BTC
+    </h1>
+    <h1>
+        balance: <span id="live1">{{text1}}</span> USDT
+    </h1>
+    <h1>
+        MA: <span id="move_avarage">{{text2}}</span>
+    </h1>
+    <h1>
+        Current time: <span id="ct">{{text3}}</span>
+    </h1>
+    <h1>
+        Current Btc: <span id="cb">{{text4}}</span>
+    </h1>
+</div>
+<script>
+    var socket = new WebSocket("ws://localhost:8000/ws/change/");
+    console.log(socket);
+
+    socket.onmessage = function(event) {
+        var data = JSON.parse(event.data);
+        console.log(data);
+        document.querySelector('#live').innerText = data.bal_btc;
+        document.querySelector('#live1').innerText = data.bal_usdt;
+        document.querySelector('#move_avarage').innerText = data.ma;
+        document.querySelector('#ct').innerText = data.ct;
+        document.querySelector('#cb').innerText = data.cb;
+    };
+
+</script>
+</body>
+</html>
